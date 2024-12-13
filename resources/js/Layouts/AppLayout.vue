@@ -30,7 +30,7 @@ const logout = () => {
 <template>
     <div>
         <Head :title="title" />
-
+<p>frgrfgfx</p>
         <Banner />
 
         <div class="min-h-screen bg-gray-100">

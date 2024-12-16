@@ -33,7 +33,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        //
+        
     }
     /**
      * Show the form for editing the specified resource.

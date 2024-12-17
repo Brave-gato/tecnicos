@@ -20,6 +20,9 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_TECHNICIAN = 'technician';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -29,6 +32,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -63,5 +67,24 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    /**
+     * Vérifie si l'utilisateur est un administrateur.
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    /**
+     * Vérifie si l'utilisateur est un technicien.
+     *
+     * @return bool
+     */
+    public function isTechnician(): bool
+    {
+        return $this->role === self::ROLE_TECHNICIAN;
     }
 }

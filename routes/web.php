@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\InterventionController;
 
 Route::get('/', function () {
@@ -14,12 +15,17 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
+// Middleware pour restreindre l'accès en fonction du rôle
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Dashboard pour les admins uniquement
+    Route::get('/dashboardadmin', function () {
+        Gate::authorize('isAdmin');
+        return Inertia::render('Admin/Dashboard');
+    })->name('dashboardadmin');
+
+    // Dashboard pour les techniciens uniquement
     Route::get('/dashboard', function () {
+        Gate::authorize('isTechnician');
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
